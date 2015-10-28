@@ -1,0 +1,4 @@
+{
+    "hello": "¡Hola al mundo!",
+    "bag": "Hay {items, plural, one {# itema} other {# itemas}} en su bolso"
+}

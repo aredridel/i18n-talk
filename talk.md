@@ -136,25 +136,35 @@ Essentially, a function call.
 English
 
 ```
-"There are n items in your cart":
-    "There are {items, number, =1 {item}, other {#items}} in your cart"
+{
+    "cart": {
+        "items": "There are
+            {items, number, =1 {item}, other {#items}}
+            in your cart"
+    }
+}
 ```
+
+----
 
 Polish (as line-wrapped JSON)
 
 ```
-"There are n items in your cart":
-    "{items, number,
-        one {znajduje się # produkt w koszyku.}
-        few {istnieją # produkty w koszyku.}
-        many {istnieje # produktów w koszyku}}"
+{
+    "cart": {
+        "items": "{items, number,
+            one {znajduje się # produkt w koszyku.}
+            few {istnieją # produkty w koszyku.}
+            many {istnieje # produktów w koszyku}}"
+    }
+}
 ```
 ---
 
 And in our code:
 
 ```
-formatMessage("There are n items in your cart", items.length)
+formatMessage(messages.items.cart, items.length)
 ```
 
 ^ It turns out that most i18n tasks turn into lookup tables. Programmers are really tempted to get clever and treat them as code and to repeat as little as possible. My advice there is only do that if you think you can beat gzip. This is data, not program.
@@ -242,27 +252,31 @@ app.listen(process.env.PORT || 8080);
 ----
 
 ```javascript
-app.use(function chooseLanguage(req, res, next) {
-    req.language = req.params.lang || 'en';
+app.use(function selectLanguageForRequest(req, res, next) {
+    var lang = req.query.lang || 'en';
     // Or use req.headers['Accept-Language']
     // Or use the user's account settings.
     // Or use multiple strategies.
+
+    req.messages = require(path.resolve(__dirname, 'locales', lang + '.json'))
     next();
 });
 ```
 
 -----
 
-`templates/hello.hbs`
+`views/hello.hbs`
 
 ```
 <!doctype html>
-<p>{{msg "Hello World"}}</p>
+<p>{{formatMessage messages.hello}}</p>
 ```
 
-```
+```javascript
 app.get('/', function (req, res) {
-    res.render('hello');
+    res.render('hello.hbs', {
+        messages: req.messages
+    });
 });
 ```
 
@@ -270,17 +284,17 @@ app.get('/', function (req, res) {
 
 `locales/es.json`
 
-```
+```json
 {
-    "Hello World": "¡Hola al mundo!"
+    "hello": "¡Hola al mundo!"
 }
 ```
 
 `locales/en.json`
 
-```
+```json
 {
-    "Hello World": "Hello, World!"
+    "hello": "Hello, World!"
 }
 ```
 
@@ -300,59 +314,88 @@ $ PORT=8080 npm start
 
 ----
 
-Let's add more
+## Let's add more
 
-`en`:
+---
 
-```
-"There are n items in your bag":
-    "There {items, number, 1 is, other are} {items} {items, number, 1 item, other items"} in your bag"
+English
+
+```json
+{
+    "bag": "There {items, plural, one{is one item} other {are # items}} in your bag"
+}
 ```
 
-`es`: 
-```
-"There are n items in your cart":
-    "Hay {items} {items, number, 1 itema, other itemas"} en su bolso"
+---
+
+Spanish
+
+```json
+{
+    "bag": "Hay {items, plural, one {# itema} other {# itemas}} en su bolso"
+}
 ```
 
 ^ You can see that we use the replacement tokens differently in each language -- English has two things that have to agree on number, Spanish only has one. In Russian, this would be one replacement with four cases. In Chinese, no variation at all. All this complexity is specific to each language, so we really do need the flexibility pushed out into the locale files, and not cluttering up the main body of our code.
 
 ----
 
-`templates/bag.hbs`
+`views/bag.hbs`
 
-```
+```hbs
 <!doctype html>
-<p>{{msg "There are n items in your bag", { items: items }}}</p>
+<p>{{formatMessage messages.bag items=items}}}</p>
 ```
 
-```
+Handler
+
+```javascript
 app.get('/bag', function (req, res) {
-    res.render('cart', { items: req.params.items });
+    res.render('bag.hbs', {
+        messages: req.messages,
+        items: req.query.items
+    });
 });
 ```
 
 ----
 
 ```
-$ PORT=8080 npm start
-# curl http://localhost:8080/bag?items=2
+http://localhost:8080/bag?items=2
+```
+
+```html
 <!doctype html>
 <p>There are 2 items in your bag</p>
-# curl http://localhost:8080/bag?items=1
+```
+
+```
+http://localhost:8080/bag?items=1
+```
+
+```html
 <!doctype html>
 <p>There is 1 item in your bag</p>
-# curl http://localhost:8080/bag?items=2&lang=es
+```
+
+```
+http://localhost:8080/bag?items=2&lang=es
+```
+
+```html
 <!doctype html>
 <p>Hay 2 itemas en su bolso</p>
 ```
 
 ----
 
+FIXME from here on out
+
 Now let's do it client-side.
 
-```
-app.use('/locales', serveStatic(app.get('i18n')))
+```javascript
+app.use('/locales',
+    serveStatic(path.resolve(__dirname, 'locales')));
 ```
 
 ^ We need a way to get the content strings to the client. There are lots of strategies for this that work.
@@ -364,7 +407,8 @@ app.use('/locales', serveStatic(app.get('i18n')))
 ^ You can fetch the language files with an XHR or fetch() call. Set them with long caching and use cache-breaking techniques like hashes in the URLs to force a new fetch on updates. Let's use a simple version of this this time.
 
 ----
-```
+
+```javascript
 var formatMessage = require('message-format');
 var Intl = require('intl-shim');
 
@@ -381,7 +425,7 @@ x.send();
 
 ---
 
-```
+```javascript
 function render() {
     document.querySelector('p').innerText = formatMessage("There are n items in your bag", { items: 2});
 }
@@ -389,7 +433,7 @@ function render() {
 
 ----
 
-```
+```html
 <!doctype html>
 <script src='app.js'>
 <html lang="{{ lang }}">
@@ -434,6 +478,8 @@ BCP47 document from the IETF has a whole standard for identifiers for languages.
 `zh-CN-hanz`
 
 ----
+
+# Tips
 
 If you're parsing a language expectation from an external source, you may have more or less to the language tag than you expect.
 

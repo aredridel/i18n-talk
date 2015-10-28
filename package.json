@@ -1,0 +1,24 @@
+{
+  "name": "i18n-talk",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aredridel/i18n-talk.git"
+  },
+  "author": "Aria Stewart <aredridel@dinhe.net>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aredridel/i18n-talk/issues"
+  },
+  "homepage": "https://github.com/aredridel/i18n-talk#readme",
+  "dependencies": {
+    "express": "^4.13.3",
+    "handlebars-intl": "^1.1.1",
+    "hbs": "^3.1.1"
+  }
+}
