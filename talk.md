@@ -33,21 +33,36 @@ Just one?
 Human languages have some irregular bits.
 
 ```
-console.log("There are " + items.length + " " + (items.length == 1 ? "item" : "items") + " in your cart")
+console.log("There are " + items.length + " " + (
+    items.length == 1 ? "item" : "items"
+) + " in your cart")
 ```
 
 ^ How many of you have done this?
 
 ---
 
-And now in Russian:
+in Polish
+
+istnieją 0 produkty w koszyku.
+znajduje się 1 produkt w koszyku.
+istnieją 2 produkty w koszyku.
+istnieją 3 produkty w koszyku.
+istnieją 4 produkty w koszyku.
+istnieje 5 produktów w koszyku
+
+---
+
+Polish
 
 ```
-// FIXME
-console.log("There are " + items.length + " " + (
-        items.length % 10 == 1 ? "item" :
-        items.length % 10 == 2 ? "itemi" :
-        items.length % 10 == 0 ? "itemo" : "items" ) + " in your cart")
+console.log((
+    items.length == 0 ? "istnieją " + items.length + " produkty" :
+    items.length == 1 ? "znajduje się " + items.length + " produkt" :
+    items.length % 10 == 2 || items.length % 10 == 3 || items.length % 10 == 4 ?
+        "istnieją " + items.length + " produkty" :
+    "istnieje " + items.length + " produktów"
+    ) + " w koszyku");
 ```
 
 ----
@@ -57,11 +72,13 @@ We've created a monster
 ```
 // FIXME
 console.log(
-    lang == "ru" ? (
-        "There are " + items.length + " " + (
-        items.length % 10 == 1 ? "item" :
-        items.length % 10 == 2 ? "itemi" :
-        items.length % 10 == 0 ? "itemo" : "items" ) + " in your cart"
+    lang == "pl" ? (
+        items.length == 0 ? "istnieją " + items.length + " produkty" :
+        items.length == 1 ? "znajduje się " + items.length + " produkt" :
+        items.length % 10 == 2 || items.length % 10 == 3 || items.length % 10 == 4 ?
+            "istnieją " + items.length + " produkty" :
+        "istnieje " + items.length + " produktów"
+        ) + " w koszyku"
     ) :
     lang == "en" ? (
         "There are " + items.length + " " + (items.length == 1 ? "item" : "items") + " in your cart"
@@ -71,7 +88,30 @@ console.log(
 
 ----
 
+```
+"dependencies": {
+    "the-english-language": "^2015.0.0",
+    "academie-francaise": "^2005.33.9"
+}
+```
+
+Never make your code depend on English.
+
+^ Who here has used rails? Ever had a model class called "Human"? Did you follow Rails demands and name the underlying table "humen"?
+
+----
+
 Because we've integrated this into our code, we have to scatter i18n into all sorts of places, deep and high in the stack.
+
+----
+
+Adding a new language means editing the entire codebase.
+
+Translations take time. This means several edits.
+
+Merge conflicts with every piece of the codebase that has user-visible text.
+
+----
 
 Let's find a better way.
 
@@ -79,25 +119,45 @@ Let's find a better way.
 
 # MessageFormat
 
-(or `gettext`, or ...) FIXME
+## (or `gettext`, or ...)
 
-Push the list of cases out into each translation. 
+Push the list of cases out into each translation. Polish specifics go in the Polish language files. Programmers see only one string in the source code.
 
-^ There are other message formatting libraries. This one's my favorite.
+^ There are other message formatting libraries. This one's my favorite. Use one.
 
 ----
 
+Message formatters usually use a key in the source code, plus placeholder values to fill in numbers and dates.
+
+Essentially, a function call.
+
+----
+
+English
+
 ```
-"There are n items in your cart": "There are {items, number, 1 item, 2 itemi, 3 itemo, other items} in your cart"
+"There are n items in your cart":
+    "There are {items, number, =1 {item}, other {#items}} in your cart"
 ```
+
+Polish (as line-wrapped JSON)
+
+```
+"There are n items in your cart":
+    "{items, number,
+        one {znajduje się # produkt w koszyku.}
+        few {istnieją # produkty w koszyku.}
+        many {istnieje # produktów w koszyku}}"
+```
+---
 
 And in our code:
 
 ```
-formatMessage("There are n items in your cart", items)
+formatMessage("There are n items in your cart", items.length)
 ```
 
-^ It turns out that most i18n tasks turn into lookup tables.
+^ It turns out that most i18n tasks turn into lookup tables. Programmers are really tempted to get clever and treat them as code and to repeat as little as possible. My advice there is only do that if you think you can beat gzip. This is data, not program.
 
 ----
 
@@ -143,15 +203,29 @@ Not that simple.
 
 ----
 
+# Updates should flow one way
+
+----
+
+Decide on a definitive source translation.
+
+Update that, then retranslate the changed pieces in each language.
+
+^ If you need to have something localized to one country, put that variation in the source translation. Maybe mark that the translation need not exist for languages not spoken in that country, though chances are this doesn't change your cost that much.
+
+Remember that you have to maintain any specialization.
+
+----
+
 # So let's do this!
 
-## Vamos a crearlo!
+## ¡Vamos a crearlo!
 
 ----
 
 `server.js`
 
-```
+```javascript
 var express = require('express');
 var app = require('app');
 var path = require('path');
@@ -167,8 +241,8 @@ app.listen(process.env.PORT || 8080);
 
 ----
 
-```
-app.use(function (req, res, next) {
+```javascript
+app.use(function chooseLanguage(req, res, next) {
     req.language = req.params.lang || 'en';
     // Or use req.headers['Accept-Language']
     // Or use the user's account settings.
