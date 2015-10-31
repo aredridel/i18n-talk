@@ -409,35 +409,70 @@ app.use('/locales',
 ----
 
 ```javascript
-var formatMessage = require('message-format');
-var Intl = require('intl-shim');
+var MessageFormat = require('message-format');
 
-var dramaticPause = 3000;
+function Formatter(dict) {
+    this.dict = dict;
+}
 
-var lang = document.documentElement.getAttribute('lang');
-var x = new XMLHttpRequest('/locale/' + lang + '.json');
-x.onready = function (wa wa wa FIXME) {
-    Intl.loadContent(lang, body);
-    setTimeout(render, dramaticPause);
-};
-x.send();
+Formatter.prototype.format = function format(message, args) {
+    if (!this.dict[message]) {
+        console.warn('no translation found for', message);
+    }
+
+    message = this.dict[message] || message;
+
+    return new MessageFormat(message).format(args);
+}
+
+module.exports = Formatter;
 ```
 
 ---
 
+
 ```javascript
-function render() {
-    document.querySelector('p').innerText = formatMessage("There are n items in your bag", { items: 2});
+// A trivial 'render' function for my component^Wapplication
+module.exports = function render(formatter) {
+    document.querySelector('p').innerText =
+        formatter.format("bag", { items: 2});
 }
 ```
 
 ----
 
-```html
+```javascript
+// Polyfills are scratchy
+require('intl');
+require('intl/locale-data/jsonp/en.js');
+require('intl/locale-data/jsonp/es.js');
+
+var fetch = require('isomorphic-fetch');
+var Promise = require('bluebird');
+var Formatter = require('./formatter');
+var render = require('./render');
+
+var dramaticPause = 3000;
+
+var lang = document.documentElement.getAttribute('lang');
+
+var messages = fetch('/locale/' + lang + '.json').then(function (res) {
+    return res.json();
+});
+
+Promise.join(messages, Promise.delay(dramaticPause)).spread(function (dict) {
+    var formatter = new Formatter(dict);
+    render(formatter);
+});
+```
+
+----
+
+```hbs
 <!doctype html>
-<script src='app.js'>
 <html lang="{{ lang }}">
     <p>Loading...</p>
+    <script src='built-app.js'></script>
 </html>
 ```
 

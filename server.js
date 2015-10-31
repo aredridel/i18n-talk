@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var hbs = require('hbs');
 var hbsIntl = require('handlebars-intl');
+var serveStatic = require('serve-static');
 
 var app = express();
 
@@ -34,5 +35,12 @@ app.get('/bag', function (req, res) {
     });
 });
 
-app.listen(process.env.PORT || 8080);
+app.get('/app', function (req, res) {
+    res.render('app.hbs', {
+        lang: req.query.lang || 'en'
+    });
+});
 
+app.use(serveStatic(__dirname));
+
+app.listen(process.env.PORT || 8080);
