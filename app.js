@@ -15,7 +15,10 @@ var messages = fetch('/locales/' + lang + '.json').then(function (res) {
     return res.json();
 });
 
-Promise.join(messages, Promise.delay(dramaticPause)).spread(function (dict) {
-    var formatter = new Formatter(dict);
-    render(formatter);
+messages.then(function (dict) {
+    alert('A dramatic pause...');
+    return Promise.delay(dramaticPause).then(function () {
+        var formatter = new Formatter(dict);
+        render(formatter);
+    });
 });

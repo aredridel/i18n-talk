@@ -453,7 +453,11 @@ var fetch = require('isomorphic-fetch');
 var Promise = require('bluebird');
 var Formatter = require('./formatter');
 var render = require('./render');
+```
 
+----
+
+```javascript
 var dramaticPause = 3000;
 
 var lang = document.documentElement.getAttribute('lang');
@@ -462,9 +466,12 @@ var messages = fetch('/locale/' + lang + '.json').then(function (res) {
     return res.json();
 });
 
-Promise.join(messages, Promise.delay(dramaticPause)).spread(function (dict) {
-    var formatter = new Formatter(dict);
-    render(formatter);
+messages.then(function (dict) {
+    alert('A dramatic pause...');
+    return Promise.delay(dramaticPause)).then(function () {
+        var formatter = new Formatter(dict);
+        render(formatter);
+    });
 });
 ```
 
