@@ -223,13 +223,15 @@ Update that, then retranslate the changed pieces in each language.
 
 ^ If you need to have something localized to one country, put that variation in the source translation. Maybe mark that the translation need not exist for languages not spoken in that country, though chances are this doesn't change your cost that much.
 
+^ This is the irreduceable complexity of internationalization. You have n source files times m locales. Don't make specialized content for special cases or certain locales a separate layer, you'll only end up permuting it. Tuck it in with the source files, and keep the complexity from exploding.
+
 Remember that you have to maintain any specialization.
 
 ----
 
-# So let's do this!
+# ¡Vamos a crearlo!
 
-## ¡Vamos a crearlo!
+## So let's do this!
 
 ----
 
@@ -514,7 +516,7 @@ BCP47 document from the IETF has a whole standard for identifiers for languages.
 
 ----
 
-# Tips
+# Tips for language tags
 
 If you're parsing a language expectation from an external source, you may have more or less to the language tag than you expect.
 
@@ -522,7 +524,34 @@ Use the `bcp47` module to parse them. Use `bcp47-serialize` to get them as a str
 
 Canonicalize into a locale you support early on.
 
-Pass them as opaque strings whenever possible -- it's far easier to get right.
+----
+
+# Tips for language tags
 
 Plan to do matching and fallback when you get a request for a language that's close to one you support but not quite right.
 
+----
+
+# Tips for language tags
+
+Pass locale tags as opaque strings whenever possible -- it's far easier to get right.
+
+```javascript
+"en-US" // Better
+
+{lang: 'en', region: 'US'} // You will make mistakes
+```
+
+Especially once you add `i-navajo` and `zh-CN-hanz`.
+
+----
+
+# Tips for long form
+
+Handle long form content separately.
+
+Use one language per file.
+
+Keep it simple.
+
+^ The additional complexity to show the right one and not re-use the format string system will be vastly dwarfed by the workflow simplicity of keeping long form content in simple files.
