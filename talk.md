@@ -70,7 +70,6 @@ console.log((
 We've created a monster
 
 ```
-// FIXME
 console.log(
     lang == "pl" ? (
         items.length == 0 ? "istnieją " + items.length + " produkty" :
@@ -239,14 +238,15 @@ Remember that you have to maintain any specialization.
 
 ```javascript
 var express = require('express');
-var app = require('app');
 var path = require('path');
 
-app.views({
-    "hbs": blah blah FIXME set up helper
-});
+var app = express();
 
-app.set("i18n", path.resolve(__dirname, 'locales'));
+var hbs = require('hbs');
+var hbsIntl = require('handlebars-intl');
+var engine = hbs.create();
+hbsIntl.registerWith(engine);
+app.engine("hbs",  engine.__express);
 
 app.listen(process.env.PORT || 8080);
 ```
@@ -391,9 +391,9 @@ http://localhost:8080/bag?items=2&lang=es
 
 ----
 
-FIXME from here on out
+# Now let's do it in the browser
 
-Now let's do it client-side.
+---
 
 ```javascript
 app.use('/locales',

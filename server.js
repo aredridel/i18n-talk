@@ -1,16 +1,14 @@
 var express = require('express');
 var path = require('path');
-var hbs = require('hbs');
-var hbsIntl = require('handlebars-intl');
 var serveStatic = require('serve-static');
 
 var app = express();
 
+var hbs = require('hbs');
+var hbsIntl = require('handlebars-intl');
 var engine = hbs.create();
 hbsIntl.registerWith(engine);
 app.engine("hbs",  engine.__express);
-
-app.set("i18n", path.resolve(__dirname, 'locales'));
 
 app.use(function selectLanguageForRequest(req, res, next) {
     var lang = req.query.lang || 'en';
