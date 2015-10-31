@@ -1,14 +1,16 @@
-Nuts and bolts of internationalization
+# Nuts and bolts of internationalization
 
 ----
 
-This isn't the most fascinating topic.
+## This isn't the most fascinating topic.
 
 ----
 
-Unless you care about people and whether they can use what you make.
+## Unless you care about people and whether they can use what you make.
 
 ----
+
+# What is i18n?
 
 Internationlization is the process of making your application able to handle multiple languages.
 
@@ -18,21 +20,27 @@ i18n.
 
 ----
 
-How many of you can read five languages??
+# How many of you can read five languages?
+
+^ I can pick the sounds out of that many at least.
 
 ----
 
-How many of you can read two languages?
+# How many of you can read two languages?
+
+^ My spanish is acceptable. Kinda.
 
 ----
 
-Just one?
+# Just one?
+
+^ Y'all are from the US, aren't you?
 
 -----
 
-Human languages have some irregular bits.
+### Human languages have some irregular bits.
 
-```
+```javascript
 console.log("There are " + items.length + " " + (
     items.length == 1 ? "item" : "items"
 ) + " in your cart")
@@ -42,7 +50,7 @@ console.log("There are " + items.length + " " + (
 
 ---
 
-in Polish
+## in Polish
 
 istnieją 0 produkty w koszyku.
 znajduje się 1 produkt w koszyku.
@@ -53,9 +61,9 @@ istnieje 5 produktów w koszyku
 
 ---
 
-Polish
+### Polish
 
-```
+```javascript
 console.log((
     items.length == 0 ? "istnieją " + items.length + " produkty" :
     items.length == 1 ? "znajduje się " + items.length + " produkt" :
@@ -67,9 +75,9 @@ console.log((
 
 ----
 
-We've created a monster
+## We've created a monster
 
-```
+```javascript
 console.log(
     lang == "pl" ? (
         items.length == 0 ? "istnieją " + items.length + " produkty" :
@@ -87,7 +95,7 @@ console.log(
 
 ----
 
-```
+```javascript
 "dependencies": {
     "the-english-language": "^2015.0.0",
     "academie-francaise": "^2005.33.9"
@@ -134,7 +142,7 @@ Essentially, a function call.
 
 English
 
-```
+```json
 {
     "cart": {
         "items": "There are
@@ -148,7 +156,7 @@ English
 
 Polish (as line-wrapped JSON)
 
-```
+```json
 {
     "cart": {
         "items": "{items, number,
@@ -162,7 +170,7 @@ Polish (as line-wrapped JSON)
 
 And in our code:
 
-```
+```javascript
 formatMessage(messages.items.cart, items.length)
 ```
 
@@ -267,12 +275,14 @@ app.use(function selectLanguageForRequest(req, res, next) {
 
 -----
 
-`views/hello.hbs`
+### `views/hello.hbs`
 
-```
+```hbs
 <!doctype html>
 <p>{{formatMessage messages.hello}}</p>
 ```
+
+### Handler
 
 ```javascript
 app.get('/', function (req, res) {
@@ -284,7 +294,7 @@ app.get('/', function (req, res) {
 
 ----
 
-`locales/es.json`
+### `locales/es.json`
 
 ```json
 {
@@ -292,7 +302,7 @@ app.get('/', function (req, res) {
 }
 ```
 
-`locales/en.json`
+### `locales/en.json`
 
 ```json
 {
@@ -320,7 +330,7 @@ $ PORT=8080 npm start
 
 ---
 
-English
+### English
 
 ```json
 {
@@ -330,7 +340,7 @@ English
 
 ---
 
-Spanish
+### Spanish
 
 ```json
 {
@@ -342,14 +352,14 @@ Spanish
 
 ----
 
-`views/bag.hbs`
+### `views/bag.hbs`
 
 ```hbs
 <!doctype html>
 <p>{{formatMessage messages.bag items=items}}}</p>
 ```
 
-Handler
+### Handler
 
 ```javascript
 app.get('/bag', function (req, res) {
