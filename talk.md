@@ -587,3 +587,9 @@ Use one language per file.
 Keep it simple.
 
 ^ The additional complexity to show the right one and not re-use the format string system will be vastly dwarfed by the workflow simplicity of keeping long form content in simple files.
+
+-----
+
+# And in closing
+
+Your native language isn't the _right way_, it's just _a way_.
