@@ -51,7 +51,7 @@ console.log("There are " + items.length + " " + (
 ## in Polish
 
 istnieją 0 produkty w koszyku.
-znajduje się 1 produkt w koszyku.
+istnieje 1 produkt w koszyku.
 istnieją 2 produkty w koszyku.
 istnieją 3 produkty w koszyku.
 istnieją 4 produkty w koszyku.
