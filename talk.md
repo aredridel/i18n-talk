@@ -507,6 +507,23 @@ formatjs.io has `dust-intl`. It's great, and supplies message formatting. Just s
 
 -----
 
+# User Interface Concerns
+
+* Finding word boundaries in Chinese is hard
+* Japanese sentences involving imported words can be very long
+* German words get very long and finding good wrapping gets tricky
+* Arabic and 8 other currently used scripts start on the right and go left.
+
+----
+
+# Culture Matters
+
+* Names don't work everywhere the same way they do in your country.
+* Names don't even work the way you think they do.
+* Not everyone writes numbers the same way.
+
+----
+
 # Warnings
 
 Language != locale
