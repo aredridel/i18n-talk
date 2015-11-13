@@ -14,7 +14,7 @@ i18n.
 
 ^ It's also a really long word. 20 letters. An I, 18 less important letters, then an n.
 
-^ There are actually three abbreviations you find when doing this work. I18n, internationalization, the process of making an application support multiple languages. L10n, localization, which is making it work in _a_ specific locale, and g10n, globalization which mostly ends up being used to refer to the whole process.
+^ There are actually two abbreviations you find when doing this work. I18n, internationalization, the process of making an application support multiple languages, and l10n, localization, which is making it work in _a_ specific locale.
 
 ----
 
@@ -34,17 +34,17 @@ i18n.
 
 ^ Y'all are from the US, aren't you?
 
------
-
-# Why do we do this?
-
 ----
 
 # Supporting multiple languages is _hard_
 
 -----
 
-# Internationalization is about accessibility
+# Why do we do this?
+
+-----
+
+# Internationalization is accessibility
 
 ^ If your site is in English only, there are millions of people who cannot use it. In the United States _alone_
 
