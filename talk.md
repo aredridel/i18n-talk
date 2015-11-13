@@ -36,6 +36,42 @@ i18n.
 
 -----
 
+# Why do we do this?
+
+----
+
+# Supporting multiple languages is _hard_
+
+-----
+
+# Internationalization is about accessibility
+
+^ If your site is in English only, there are millions of people who cannot use it. In the United States _alone_
+
+----
+
+# Empathy
+
+## Imagine you're planning a vacation
+
+^ Let's do a little empathy practice here. I want you to imagine you're trying to plan a big exciting vacation. You've saved up a nice little chunk of cash. Your lover is a doctor, and it's been a stressful year, but you've two weeks for a holiday. You've always wanted to see the Grand Canyon, and the two of you decide to go. You have to decide whether to do a package tour, or decide to rent a camper, drive to the Grand Canyon, and go hiking.
+
+----
+
+# Empathy
+
+## Grab your iPad, sit down on the patio in your house in El Pedregal, Mexico City.
+
+----
+
+# Empathy
+
+## Type *vacaciones gran cañon* into google.com.mx.
+
+^ What do you think your first obstacle is going to be? Put some hands up!
+
+-----
+
 ### Human languages have some irregular bits.
 
 ```javascript
