@@ -205,7 +205,7 @@ Polish (as line-wrapped JSON)
 And in our code:
 
 ```javascript
-formatMessage(messages.items.cart, items.length)
+formatMessage(messages.items.cart, { items: 3 });
 ```
 
 ^ It turns out that most i18n tasks turn into lookup tables. Programmers are really tempted to get clever and treat them as code and to repeat as little as possible. My advice there is only do that if you think you can beat gzip. This is data, not program.
