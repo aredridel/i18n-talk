@@ -1,12 +1,6 @@
 # Nuts and bolts of internationalization
 
-----
-
-## This isn't the most fascinating topic.
-
-----
-
-## Unless you care about people and whether they can use what you make.
+^ This isn't the most fascinating topic, unless you care about people and whether they can use what you make.
 
 ----
 
@@ -14,9 +8,13 @@
 
 Internationlization is the process of making your application able to handle multiple languages.
 
-It's also a really long word. 20 letters. An I, 18 less important letters, then an n.
+I, 18 letters, n.
 
 i18n.
+
+^ It's also a really long word. 20 letters. An I, 18 less important letters, then an n.
+
+^ There are actually three abbreviations you find when doing this work. I18n, internationalization, the process of making an application support multiple languages. L10n, localization, which is making it work in _a_ specific locale, and g10n, globalization which mostly ends up being used to refer to the whole process.
 
 ----
 
