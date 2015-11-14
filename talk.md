@@ -635,6 +635,17 @@ Keep it simple.
 
 -----
 
+# Command-line apps
+
+Look at the `LANG` environment variable, or the pieces and parts, `LC_*`.
+
+How you sort, display numbers, each specifiable separately.
+
+Consider `gettext` format messages to be similar to apps in C.
+
+----
+
+
 # And in closing
 
 Your native language isn’t the _right way_, it’s just _a way_.
