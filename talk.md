@@ -4,21 +4,25 @@
 
 ----
 
-# What is i18n?
+# Internationlization
 
-Internationlization is the process of making your application able to handle multiple languages.
-
-I, 18 letters, n.
-
-i18n.
+## making your application able to handle multiple languages.
 
 ^ It’s also a really long word. 20 letters. An I, 18 less important letters, then an n.
 
 ^ There are actually two abbreviations you find when doing this work. I18n, internationalization, the process of making an application support multiple languages, and l10n, localization, which is making it work in _a_ specific locale.
 
+-----
+
+# Why do we do this?
+
 ----
 
 # How many of you can read five languages?
+
+^ I don't mean programming languages here.
+
+^ Let's see some hands!
 
 ^ I can pick the sounds out of that many at least.
 
@@ -32,15 +36,11 @@ i18n.
 
 # Just one?
 
-^ Y’all are from the US, aren’t you?
+^ You with your hands up, you are from the US, aren’t you?
 
 ----
 
 # Supporting multiple languages is _hard_
-
------
-
-# Why do we do this?
 
 -----
 
@@ -50,37 +50,51 @@ i18n.
 
 ----
 
-# Empathy
+# A little empathy game
 
-## Imagine you’re planning a vacation
+^ I want you to imagine something with me. Really think about it, get into someone else's shoes for a moment.
 
-^ Let’s do a little empathy practice here. I want you to imagine you’re trying to plan a big exciting vacation. You’ve saved up a nice little chunk of cash. Your lover is a doctor, and it’s been a stressful year, but you’ve two weeks for a holiday. You’ve always wanted to see the Grand Canyon, and the two of you decide to go. You have to decide whether to do a package tour, or decide to rent a camper, drive to the Grand Canyon, and go hiking.
+-----
 
-----
+## You’re planning a vacation
 
-# Empathy
-
-## Grab your iPad, sit down on the patio of your house
+^ I want you to imagine you’re trying to plan a big exciting vacation. It's been a stressful year, but you have two weeks off.
 
 ----
 
-# Empathy
+## It's march, it's beautiful outside
 
-## You're in El Pedregal, Mexico City, it's March, it's warm and sunny.
+^ You’ve saved up a nice little chunk of cash. You've always wanted to see the Grand Canyon, and you and someone close to you decide to go. You have to decide whether to do a package tour, or decide to rent a camper, drive to the Grand Canyon, and go hiking.
 
 ----
 
-# Empathy
+## Grab your iPad, sit down on the patio
 
-## Type *vacaciones gran cañon* into google.com.mx.
+---
+
+## Pour a glass of wine and figure out this vacation.
+
+----
+
+## Type 
+
+# `vacaciones gran cañon`
+
+## into google.com.mx.
 
 ^ What do you think your first obstacle is going to be? Put some hands up!
 
 ^ First is that the do-it-yourself option has no translation. The US parks service has no information in spanish. The package tour companies do though!
 
-^ [pause and talk]
+-----
+
+# Unreadable information is inaccessible
+
+^ There's an absolute ton of information about the grand canyon out there. The official information is English only. People capitalize on this and sell books and guides, but fundamentally, the original truth is going to take some work to read. It may not be worth it.
 
 -----
+
+## Another thing
 
 # There are non-fluent speakers
 
@@ -94,11 +108,13 @@ It takes a long time to learn a language. It's stressful. It's hard enough to re
 
 ----
 
+## Remember 
+
 # Dense writing is hard to read
 
-^ As web developers we can assume that people don't read. If there's a message, or something unique, people will stop to read, but in general, humans take lots of approaches to interacting with the world and reading isn't actually the primary one.
+^ As developers we can assume that people don't read; this is particularly true of application developers. If there's a message, or something unique, people will stop to read, but in general, humans take lots of approaches to interacting with the world and reading isn't actually the primary one. 
 
-^ We experiment, we explore, we highlight things as we read, we click buttons to see what they do. We rarely read without interacting.
+^ We experiment, we explore, we highlight things as we read, we click buttons to see what they do. We rarely read without interacting. The richer the environment, the more people will interact with it over reading any given text.
 
 ------
 
@@ -131,29 +147,13 @@ istnieje 5 produktów w koszyku
 
 ---
 
-Translations take time. This means several edits.
-
-Businesses rarely put enough time into accessibility. 
-
-^ We forget that the people who won't visit our site are potential visitors. We optimize for who shows up.
-
------
-
-# Integration
-
-Extract text into files per language.
-
-Call a function or helper for each bit of text you want, so there's simple inputs, and a string of text as output.
-
------
-
-# That's the easy part
+## The code is the easy part
 
 ------
 
-# Workflows
+# Maintenance
 
-The hard part.
+## is the hard part.
 
 ^ This is hard in part because resources aren't allocated to do it right.
 
@@ -177,7 +177,9 @@ The hard part.
 
 ----
 
-# Updates should flow one way
+## You will lose track of it unless
+
+# Updates flow one way
 
 ^ Marketing wants to tweak some copy, but just in one language, or just for one area. Now we have to get that information into our source translation. 
 
@@ -189,19 +191,19 @@ Decide on a definitive source translation.
 
 Update that, then retranslate the changed pieces in each language.
 
-Handle contextual variation carefully.
-
 ^ If you need to have something localized to one country, put that variation in the source translation. Maybe mark that the translation need not exist for languages not spoken in that country, though chances are this doesn’t change your cost that much.
 
 ^ This is the irreduceable complexity of internationalization. You have n source files times m locales. Don’t make specialized content for special cases or certain locales a separate layer, you’ll only end up permuting it. Tuck it in with the source files, and keep the complexity from exploding.
 
-Remember that you have to maintain any specialization.
-
 ----
+
+## Translations that only make sense in one context are harder to maintain
+
+-----
 
 # User Interface Concerns
 
-* Finding word boundaries isn’t always easy
+* Finding word boundaries isn’t easy
 * Japanese sentences involving imported words can be very long
 * German words get very long and finding good wrapping gets tricky
 * Arabic and 8 other currently used scripts start on the right and go left.
@@ -217,16 +219,6 @@ Remember that you have to maintain any specialization.
 * Not everyone writes numbers the same way.
 
 ----
-
-# Warnings
-
-Language != locale
-
-English is spoken in the US. English is spoken in the UK.
-
-But we spell `colour` differently and we write our dates inside out in the US. Same language, different specifics. You can call the language with the local details a "locale".
-
-------
 
 # In closing
 
