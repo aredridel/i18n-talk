@@ -1,4 +1,6 @@
-# Nuts and bolts of internationalization
+## Aria tells you why you should care about
+
+# Internationalization
 
 ^ This isn’t the most fascinating topic, unless you care about people and whether they can use what you make.
 
@@ -37,10 +39,6 @@
 # Just one?
 
 ^ You with your hands up, you are from the US, aren’t you?
-
-----
-
-# Supporting multiple languages is _hard_
 
 -----
 
@@ -90,7 +88,7 @@
 
 # Unreadable information is inaccessible
 
-^ There's an absolute ton of information about the grand canyon out there. The official information is English only. People capitalize on this and sell books and guides, but fundamentally, the original truth is going to take some work to read. It may not be worth it.
+^ There's an ton of information about the grand canyon out there. The official information is English only. People capitalize on this and sell books and guides, but fundamentally, the original truth is going to take some work to read. It may not be worth it.
 
 -----
 
@@ -124,7 +122,11 @@ It takes a long time to learn a language. It's stressful. It's hard enough to re
 
 -----
 
-### Human languages have some irregular bits.
+# Supporting multiple languages is _hard_
+
+----
+
+### Human languages are irregular.
 
 ```javascript
 console.log("There are " + items.length + " " + (
@@ -145,13 +147,21 @@ istnieją 3 produkty w koszyku.
 istnieją 4 produkty w koszyku.
 istnieje 5 produktów w koszyku
 
+^ There are tools for handling plurals in messages -- check out MessageFormat and the formatjs project
+
 ---
 
 ## The code is the easy part
 
+---
+
+## We fail because
+
+# Accessibility is not a feature checkbox
+
 ------
 
-# Maintenance
+# Process
 
 ## is the hard part.
 
@@ -162,6 +172,8 @@ istnieje 5 produktów w koszyku
 ^ Ongoing maintenance, however...
 
 ----
+
+## We fail because
 
 # Translation takes time.
 
@@ -179,7 +191,7 @@ istnieje 5 produktów w koszyku
 
 ## You will lose track of it unless
 
-# Updates flow one way
+# updates flow one way
 
 ^ Marketing wants to tweak some copy, but just in one language, or just for one area. Now we have to get that information into our source translation. 
 
@@ -187,32 +199,23 @@ istnieje 5 produktów w koszyku
 
 ----
 
-Decide on a definitive source translation.
-
-Update that, then retranslate the changed pieces in each language.
-
-^ If you need to have something localized to one country, put that variation in the source translation. Maybe mark that the translation need not exist for languages not spoken in that country, though chances are this doesn’t change your cost that much.
-
-^ This is the irreduceable complexity of internationalization. You have n source files times m locales. Don’t make specialized content for special cases or certain locales a separate layer, you’ll only end up permuting it. Tuck it in with the source files, and keep the complexity from exploding.
+## Translations that only make sense in one context are harder to maintain
 
 ----
 
-## Translations that only make sense in one context are harder to maintain
+## We fail because
+
+# we alienate our users
+
+^ Accessibility is a process that means interacting with our users, specifically the users who struggle to use what we make.
+
+^ We must include our users, all of them, as early as we can.
 
 -----
 
-# User Interface Concerns
+## We fail because
 
-* Finding word boundaries isn’t easy
-* Japanese sentences involving imported words can be very long
-* German words get very long and finding good wrapping gets tricky
-* Arabic and 8 other currently used scripts start on the right and go left.
-
-^ Seriously, go to `google.com.iq`. Also, be weirded out that your language preference sticks just by visiting that.
-
-----
-
-# Culture Matters
+# we forget culture matters
 
 * Names don’t work everywhere the same way they do in your country.
 * Names don’t even work the way you think they do.
@@ -220,6 +223,19 @@ Update that, then retranslate the changed pieces in each language.
 
 ----
 
-# In closing
+## We fail because
 
-Your native language isn’t the _right way_, it’s just _a way_.
+# the world is a varied place
+
+* English has so many words with similar meanings
+* German words get very long and finding good wrapping gets tricky
+* Japanese sentences involving imported words can be very long
+* Arabic and 8 other currently used scripts start on the right and go left.
+
+^ Seriously, go to `google.com.iq`. Also, be weirded out that your language preference sticks just by visiting that.
+
+----
+
+## In closing
+
+# Your native language isn’t the _right way_, it’s just _a way_.
