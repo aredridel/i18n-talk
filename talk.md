@@ -1,4 +1,4 @@
-## Aria tells you why you should care about
+## In which I tell you why you should care about
 
 # Internationalization
 
@@ -6,7 +6,7 @@
 
 ----
 
-# Internationlization
+# Internationalization
 
 ## making your application able to handle multiple languages.
 
