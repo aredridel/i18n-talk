@@ -1,4 +1,0 @@
-{
-    "hello": "Hello World!",
-    "bag": "There {items, plural, one{is one item} other {are # items}} in your bag"
-}
